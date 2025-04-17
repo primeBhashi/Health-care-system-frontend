@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPredict - Health Data Entry</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2ecc71;
+            --secondary-dark: #27ae60;
+            --light: #f5f7fa;
+            --dark: #2c3e50;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --light-gray: #ecf0f1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            min-height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--dark);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .user-profile {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            margin: 0 auto 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .menu-list {
+            list-style: none;
+            padding: 20px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .menu-item.active {
+            background-color: var(--primary);
+        }
+        
+        .menu-item:hover {
+            background-color: rgba(52, 152, 219, 0.3);
+        }
+        
+        .menu-item span {
+            margin-left: 10px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title h1 {
+            color: var(--dark);
+            font-size: 1.8rem;
+        }
+        
+        .page-title p {
+            color: #666;
+        }
+        
+        .notifications {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .notification-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+        
+        /* Data Entry Form */
+        .data-entry-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .unit-input {
+            position: relative;
+        }
+        
+        .unit-input input {
+            padding-right: 50px;
+        }
+        
+        .unit-label {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .range-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-item input {
+            margin-right: 8px;
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background: #f1f1f1;
+            color: #555;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .entry-history {
+            margin-top: 40px;
+        }
+        
+        .history-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .history-table th, .history-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .history-table th {
+            background-color: var(--light);
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .history-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .history-table tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-normal {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: var(--secondary-dark);
+        }
+        
+        .badge-warning {
+            background-color: rgba(243, 156, 18, 0.2);
+            color: var(--warning);
+        }
+        
+        .badge-danger {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: var(--danger);
+        }
+        
+        .info-box {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .info-box p {
+            margin: 0;
+            color: var(--dark);
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .sidebar-header h2, .user-profile p, .menu-item span {
+                display: none;
+            }
+            
+            .avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .menu-item {
+                justify-content: center;
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .form-group {
+                min-width: 100%;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>HealthPredict</h2>
+            </div>
+            <div class="user-profile">
+                <div class="avatar">J</div>
+                <p>John Doe</p>
+            </div>
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <i>📊</i>
+                    <span>Dashboard</span>
+                </li>
+                <li class="menu-item active">
+                    <i>📝</i>
+                    <span>Health Data</span>
+                </li>
+                <li class="menu-item">
+                    <i>🔍</i>
+                    <span>Predictions</span>
+                </li>
+                <li class="menu-item">
+                    <i>👨‍⚕️</i>
+                    <span>Doctors</span>
+                </li>
+                <li class="menu-item">
+                    <i>📅</i>
+                    <span>Appointments</span>
+                </li>
+                <li class="menu-item">
+                    <i>💊</i>
+                    <span>Prescriptions</span>
+                </li>
+                <li class="menu-item">
+                    <i>⚙️</i>
+                    <span>Settings</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1>Health Data Entry</h1>
+                    <p>Record your health measurements and symptoms</p>
+                </div>
+                <div class="notifications">
+                    <i>🔔</i>
+                    <span class="notification-count">3</span>
+                </div>
+            </div>
+            
+            <div class="data-entry-container">
+                <form id="health-data-form">
+                    <div class="form-section">
+                        <h2 class="section-title">Basic Measurements</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="blood-sugar">Blood Sugar</label>
+                                <div class="unit-input">
+                                    <input type="number" id="blood-sugar" placeholder="Enter value">
+                                    <span class="unit-label">mg/dL</span>
+                                </div>
+                                <div class="range-info">
+                                    <span>Normal Range: 70-130 mg/dL</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="blood-pressure">Blood Pressure</label>
+                                <div class="unit-input">
+                                    <input type="text" id="blood-pressure" placeholder="e.g. 120/80">
+                                    <span class="unit-label">mmHg</span>
+                                </div>
+                                <div class="range-info">
+                                    <span>Normal Range: ≤120/80 mmHg</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="heart-rate">Heart Rate</label>
+                                <div class="unit-input">
+                                    <input type="number" id="heart-rate" placeholder="Enter value">
+                                    <span class="unit-label">bpm</span>
+                                </div>
+                                <div class="range-info">
+                                    <span>Normal Range: 60-100 bpm</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="temperature">Body Temperature</label>
+                                <div class="unit-input">
+                                    <input type="number" id="temperature" step="0.1" placeholder="Enter value">
+                                    <span class="unit-label">°C</span>
+                                </div>
+                                <div class="range-info">
+                                    <span>Normal Range: 36.1-37.2 °C</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="weight">Weight</label>
+                                <div class="unit-input">
+                                    <input type="number" id="weight" step="0.1" placeholder="Enter value">
+                                    <span class="unit-label">kg</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="oxygen">Oxygen Saturation</label>
+                                <div class="unit-input">
+                                    <input type="number" id="oxygen" placeholder="Enter value">
+                                    <span class="unit-label">%</span>
+                                </div>
+                                <div class="range-info">
+                                    <span>Normal Range: 95-100%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h2 class="section-title">Additional Information</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="meal-time">Meal Time</label>
+                                <select id="meal-time">
+                                    <option value="">Select option</option>
+                                    <option value="before_breakfast">Before Breakfast</option>
+                                    <option value="after_breakfast">After Breakfast</option>
+                                    <option value="before_lunch">Before Lunch</option>
+                                    <option value="after_lunch">After Lunch</option>
+                                    <option value="before_dinner">Before Dinner</option>
+                                    <option value="after_dinner">After Dinner</option>
+                                    <option value="bedtime">Bedtime</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="activity-level">Activity Level Today</label>
+                                <select id="activity-level">
+                                    <option value="">Select option</option>
+                                    <option value="sedentary">Sedentary</option>
+                                    <option value="light">Light Activity</option>
+                                    <option value="moderate">Moderate Activity</option>
+                                    <option value="heavy">Heavy Exercise</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Symptoms (Select all that apply)</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="symptom-headache">
+                                        <label for="symptom-headache">Headache</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="symptom-dizziness">
+                                        <label for="symptom-dizziness">Dizziness</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="symptom-fatigue">
+                                        <label for="symptom-fatigue">Fatigue</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="symptom-nausea">
+                                        <label for="symptom-nausea">Nausea</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="symptom-thirst">
+                                        <label for="symptom-thirst">Excessive Thirst</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="symptom-hunger">
+                                        <label for="symptom-hunger">Unusual Hunger</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="symptom-blurry">
+                                        <label for="symptom-blurry">Blurred Vision</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="symptom-numbness">
+                                        <label for="symptom-numbness">Numbness</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="notes">Additional Notes</label>
+                                <textarea id="notes" placeholder="Enter any additional information or context..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <p>Regular monitoring of your health data helps our AI to provide more accurate predictions and recommendations.</p>
+                    </div>
+                    
+                    <div class="btn-container">
+                        <button type="button" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="entry-history">
+                <h2 class="history-title">Recent Entries</h2>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Blood Sugar</th>
+                            <th>Blood Pressure</th>
+                            <th>Heart Rate</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>April 17, 2025 - 8:30 AM</td>
+                            <td>124 mg/dL</td>
+                            <td>128/85 mmHg</td>
+                            <td>72 bpm</td>
+                            <td><span class="status-badge badge-normal">Normal</span></td>
+                        </tr>
+                        <tr>
+                            <td>April 16, 2025 - 7:45 PM</td>
+                            <td>145 mg/dL</td>
+                            <td>130/88 mmHg</td>
+                            <td>78 bpm</td>
+                            <td><span class="status-badge badge-warning">Elevated</span></td>
+                        </tr>
+                        <tr>
+                            <td>April 16, 2025 - 8:00 AM</td>
+                            <td>118 mg/dL</td>
+                            <td>122/82 mmHg</td>
+                            <td>68 bpm</td>
+                            <td><span class="status-badge badge-normal">Normal</span></td>
+                        </tr>
+                        <tr>
+                            <td>April 15, 2025 - 8:15 PM</td>
+                            <td>138 mg/dL</td>
+                            <td>125/84 mmHg</td>
+                            <td>74 bpm</td>
+                            <td><span class="status-badge badge-normal">Normal</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form submission handling
+        document.getElementById('health-data-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const bloodSugar = document.getElementById('blood-sugar').value;
+            const bloodPressure = document.getElementById('blood-pressure').value;
+            const heartRate = document.getElementById('heart-rate').value;
+            const temperature = document.getElementById('temperature').value;
+            const weight = document.getElementById('weight').value;
+            const oxygen = document.getElementById('oxygen').value;
+            const mealTime = document.getElementById('meal-time').value;
+            const activityLevel = document.getElementById('activity-level').value;
+            const notes = document.getElementById('notes').value;
+            
+            // Get symptoms
+            const symptoms = [];
+            document.querySelectorAll('.checkbox-item input:checked').forEach(item => {
+                symptoms.push(item.id.replace('symptom-', ''));
+            });
+            
+            // In a real application, you would send this data to the server
+            console.log({
+                bloodSugar,
+                bloodPressure,
+                heartRate,
+                temperature,
+                weight,
+                oxygen,
+                mealTime,
+                activityLevel,
+                symptoms,
+                notes,
+                timestamp: new Date()
+            });
+            
+            // Show success message (in a real app)
+            alert('Health data saved successfully!');
+            
+            // Reset form or redirect
+            // this.reset();
+        });
+        
+        // Navigation
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const page = this.querySelector('span').textContent.toLowerCase();
+                
+                if (page === 'dashboard') {
+                    window.location.href = 'dashboard.html';
+                } else if (page === 'predictions') {
+                    window.location.href = 'predictions.html';
+                } else if (page === 'doctors') {
+                    window.location.href = 'channeling.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
