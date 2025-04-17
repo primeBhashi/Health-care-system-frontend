@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthPredict - Dashboard</title>
+    <title>HealthPredict - Patient Dashboard</title>
     <style>
         :root {
             --primary: #3498db;
@@ -91,6 +91,11 @@
         
         .menu-item:hover {
             background-color: rgba(52, 152, 219, 0.3);
+        }
+        
+        .menu-item i {
+            width: 24px;
+            text-align: center;
         }
         
         .menu-item span {
@@ -304,6 +309,11 @@
             color: var(--warning);
         }
         
+        .icon-prescription {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: var(--danger);
+        }
+        
         .activity-content {
             flex: 1;
         }
@@ -378,6 +388,300 @@
             color: var(--dark);
         }
         
+        /* Profile Update Form */
+        .profile-section {
+            margin-top: 20px;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .form-input[type="textarea"] {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .form-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .form-btn.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .form-btn.primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .form-btn.secondary {
+            background-color: var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .form-btn.secondary:hover {
+            background-color: #d5dbdb;
+        }
+        
+        /* Channeling Section */
+        .channeling-section {
+            margin-top: 20px;
+        }
+        
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .search-box {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 30px;
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 5px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .filter-dropdown {
+            margin-left: 20px;
+        }
+        
+        .filter-dropdown select {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            font-size: 0.9rem;
+            outline: none;
+        }
+        
+        .doctor-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .doctor-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .doctor-info {
+            flex: 1;
+        }
+        
+        .doctor-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .doctor-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .doctor-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn-small {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .action-btn-small.primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .action-btn-small.primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .payment-section {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .payment-info {
+            margin-bottom: 15px;
+        }
+        
+        .payment-amount {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .payment-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff4500; /* Stripe-like color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        
+        .payment-btn:hover {
+            background-color: #e63900;
+        }
+        
+        /* Video Conference */
+        .video-section {
+            margin-top: 20px;
+        }
+        
+        .video-container {
+            background-color: #000;
+            border-radius: 10px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+        }
+        
+        .video-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+        
+        .video-control {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .video-control:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .video-control.end {
+            background-color: var(--danger);
+        }
+        
+        .video-control.end:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Prescription History */
+        .prescription-section {
+            margin-top: 20px;
+        }
+        
+        .prescription-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+        }
+        
+        .prescription-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .prescription-date {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .prescription-doctor {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .prescription-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 992px) {
             .sidebar {
                 width: 70px;
@@ -400,16 +704,57 @@
         }
         
         @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .metrics-container {
+            .dashboard-grid, .metrics-container {
                 grid-template-columns: 1fr;
             }
             
             .quick-actions {
                 flex-direction: column;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+            }
+            
+            .filter-dropdown {
+                margin: 10px 0 0 0;
+                width: 100%;
+            }
+            
+            .filter-dropdown select {
+                width: 100%;
+            }
+            
+            .doctor-actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .form-buttons {
+                flex-direction: column;
+            }
+            
+            .form-btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .main-content {
+                padding: 15px;
+            }
+            
+            .card, .metric-card, .doctor-card, .prescription-card {
+                padding: 15px;
+            }
+            
+            .video-container {
+                height: 200px;
+            }
+            
+            .video-control {
+                width: 40px;
+                height: 40px;
             }
         }
     </style>
@@ -421,36 +766,36 @@
                 <h2>HealthPredict</h2>
             </div>
             <div class="user-profile">
-                <div class="avatar">J</div>
+                <div class="avatar">JD</div>
                 <p>John Doe</p>
             </div>
             <ul class="menu-list">
                 <li class="menu-item active">
-                    <i>📊</i>
+                    <i class="fas fa-home"></i>
                     <span>Dashboard</span>
                 </li>
                 <li class="menu-item">
-                    <i>📝</i>
+                    <i class="fas fa-heartbeat"></i>
                     <span>Health Data</span>
                 </li>
                 <li class="menu-item">
-                    <i>🔍</i>
+                    <i class="fas fa-brain"></i>
                     <span>Predictions</span>
                 </li>
                 <li class="menu-item">
-                    <i>👨‍⚕️</i>
+                    <i class="fas fa-user-md"></i>
                     <span>Doctors</span>
                 </li>
                 <li class="menu-item">
-                    <i>📅</i>
+                    <i class="fas fa-calendar-alt"></i>
                     <span>Appointments</span>
                 </li>
                 <li class="menu-item">
-                    <i>💊</i>
+                    <i class="fas fa-prescription-bottle"></i>
                     <span>Prescriptions</span>
                 </li>
                 <li class="menu-item">
-                    <i>⚙️</i>
+                    <i class="fas fa-cog"></i>
                     <span>Settings</span>
                 </li>
             </ul>
@@ -463,8 +808,8 @@
                     <p>Here's your health summary for today</p>
                 </div>
                 <div class="notifications">
-                    <i>🔔</i>
-                    <span class="notification-count">3</span>
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-count">3</div>
                 </div>
             </div>
             
@@ -472,7 +817,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Overall Health Status</div>
-                        <div>📈</div>
+                        <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="health-status">
                         <div class="status-item">
@@ -493,7 +838,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Today's Prediction</div>
-                        <div>🔮</div>
+                        <i class="fas fa-brain"></i>
                     </div>
                     <p>Based on your recent blood sugar levels and activity, you're on track with your health goals. Consider reducing carbohydrate intake slightly.</p>
                 </div>
@@ -501,11 +846,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Upcoming Appointments</div>
-                        <div>📅</div>
+                        <i class="fas fa-calendar-alt"></i>
                     </div>
                     <ul class="activity-list">
                         <li class="activity-item">
-                            <div class="activity-icon icon-appointment">📅</div>
+                            <div class="activity-icon icon-appointment"><i class="fas fa-calendar-alt"></i></div>
                             <div class="activity-content">
                                 <div class="activity-title">Dr. Sarah Johnson - Checkup</div>
                                 <div class="activity-time">Tomorrow, 10:00 AM</div>
@@ -521,7 +866,7 @@
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-title">Blood Sugar</div>
-                        <div>🩸</div>
+                        <i class="fas fa-tint"></i>
                     </div>
                     <div class="metric-value">124 mg/dL</div>
                     <div class="metric-footer">
@@ -533,7 +878,7 @@
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-title">Blood Pressure</div>
-                        <div>❤️</div>
+                        <i class="fas fa-heart"></i>
                     </div>
                     <div class="metric-value">128/85</div>
                     <div class="metric-footer">
@@ -545,7 +890,7 @@
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-title">Weight</div>
-                        <div>⚖️</div>
+                        <i class="fas fa-weight"></i>
                     </div>
                     <div class="metric-value">78 kg</div>
                     <div class="metric-footer">
@@ -557,7 +902,7 @@
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-title">Heart Rate</div>
-                        <div>💓</div>
+                        <i class="fas fa-heartbeat"></i>
                     </div>
                     <div class="metric-value">72 bpm</div>
                     <div class="metric-footer">
@@ -570,10 +915,9 @@
             <div class="card" style="margin-top: 30px;">
                 <div class="card-header">
                     <div class="card-title">Blood Sugar Trends</div>
-                    <div>📊</div>
+                    <i class="fas fa-chart-line"></i>
                 </div>
                 <div class="chart-container">
-                    <!-- Chart would be rendered here using JavaScript -->
                     <div style="height: 100%; display: flex; justify-content: center; align-items: center; color: #666;">
                         Interactive chart would be displayed here
                     </div>
@@ -585,21 +929,21 @@
             <div class="card">
                 <ul class="activity-list">
                     <li class="activity-item">
-                        <div class="activity-icon icon-reading">📊</div>
+                        <div class="activity-icon icon-reading"><i class="fas fa-tint"></i></div>
                         <div class="activity-content">
                             <div class="activity-title">Blood Sugar Reading: 124 mg/dL</div>
                             <div class="activity-time">Today, 8:30 AM</div>
                         </div>
                     </li>
                     <li class="activity-item">
-                        <div class="activity-icon icon-prediction">🔮</div>
+                        <div class="activity-icon icon-prediction"><i class="fas fa-brain"></i></div>
                         <div class="activity-content">
                             <div class="activity-title">New Health Prediction Available</div>
                             <div class="activity-time">Today, 7:00 AM</div>
                         </div>
                     </li>
                     <li class="activity-item">
-                        <div class="activity-icon icon-appointment">📅</div>
+                        <div class="activity-icon icon-appointment"><i class="fas fa-calendar-alt"></i></div>
                         <div class="activity-content">
                             <div class="activity-title">Appointment Booked: Dr. Sarah Johnson</div>
                             <div class="activity-time">Yesterday, 2:15 PM</div>
@@ -610,34 +954,162 @@
             
             <div class="quick-actions">
                 <div class="action-btn">
-                    <div class="action-icon icon-entry">📝</div>
+                    <div class="action-icon icon-entry"><i class="fas fa-heartbeat"></i></div>
                     <div class="action-label">Enter Health Data</div>
                 </div>
                 <div class="action-btn">
-                    <div class="action-icon icon-appointment">👨‍⚕️</div>
+                    <div class="action-icon icon-appointment"><i class="fas fa-user-md"></i></div>
                     <div class="action-label">Book Doctor</div>
                 </div>
                 <div class="action-btn">
-                    <div class="action-icon icon-prediction">🔮</div>
+                    <div class="action-icon icon-prediction"><i class="fas fa-brain"></i></div>
                     <div class="action-label">View Predictions</div>
+                </div>
+            </div>
+            
+            <!-- Profile Update Section -->
+            <div class="profile-section">
+                <h2>Update Profile & Medical History</h2>
+                <div class="form-container">
+                    <h3>Personal Information</h3>
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" value="John Doe" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-input" value="45" placeholder="Enter your age">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Gender</label>
+                        <select class="form-input">
+                            <option value="male" selected>Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <h3>Medical History</h3>
+                    <div class="form-group">
+                        <label class="form-label">Medical Conditions</label>
+                        <textarea class="form-input" placeholder="List any medical conditions (e.g., Diabetes, Hypertension)">Diabetes, Hypertension</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Allergies</label>
+                        <textarea class="form-input" placeholder="List any allergies (e.g., Penicillin)">Penicillin</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Medications</label>
+                        <textarea class="form-input" placeholder="List current medications">Metformin 500mg, Lisinopril 10mg</textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button class="form-btn secondary">Cancel</button>
+                        <button class="form-btn primary">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Channeling Section -->
+            <div class="channeling-section">
+                <h2>Book a Doctor</h2>
+                <div class="filter-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search doctors...">
+                    </div>
+                    <div class="filter-dropdown">
+                        <select>
+                            <option>All Specialties</option>
+                            <option>Cardiology</option>
+                            <option>General Practice</option>
+                            <option>Endocrinology</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="doctor-card">
+                    <div class="doctor-avatar">SJ</div>
+                    <div class="doctor-info">
+                        <div class="doctor-name">Dr. Sarah Johnson</div>
+                        <div class="doctor-details">Cardiologist • Available: Tomorrow, 10:00 AM</div>
+                    </div>
+                    <div class="doctor-actions">
+                        <button class="action-btn-small primary">Book In-Person</button>
+                        <button class="action-btn-small primary">Book Video</button>
+                    </div>
+                </div>
+                
+                <div class="doctor-card">
+                    <div class="doctor-avatar">RM</div>
+                    <div class="doctor-info">
+                        <div class="doctor-name">Dr. Robert Miller</div>
+                        <div class="doctor-details">Endocrinologist • Available: Wednesday, 2:00 PM</div>
+                    </div>
+                    <div class="doctor-actions">
+                        <button class="action-btn-small primary">Book In-Person</button>
+                        <button class="action-btn-small primary">Book Video</button>
+                    </div>
+                </div>
+                
+                <div class="payment-section">
+                    <div class="payment-info">
+                        <div class="payment-amount">Consultation Fee: $50.00</div>
+                        <p>Secure payment powered by Stripe</p>
+                    </div>
+                    <a href="https://buy.stripe.com/test_123" class="payment-btn">Pay Now</a>
+                </div>
+                
+                <div class="video-section">
+                    <h3>Video Consultation</h3>
+                    <div class="video-container">
+                        <p>Video conference would be displayed here</p>
+                        <div class="video-controls">
+                            <div class="video-control"><i class="fas fa-microphone"></i></div>
+                            <div class="video-control"><i class="fas fa-video"></i></div>
+                            <div class="video-control end"><i class="fas fa-phone-slash"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Prescription History Section -->
+            <div class="prescription-section">
+                <h2>Prescription History</h2>
+                <div class="prescription-card">
+                    <div class="prescription-header">
+                        <div class="prescription-date">April 10, 2025</div>
+                        <div class="prescription-doctor">Dr. Sarah Johnson</div>
+                    </div>
+                    <div class="prescription-details">
+                        <p><strong>Medication:</strong> Metformin 500mg</p>
+                        <p><strong>Dosage:</strong> 1 tablet daily</p>
+                        <p><strong>Duration:</strong> 30 days</p>
+                    </div>
+                </div>
+                
+                <div class="prescription-card">
+                    <div class="prescription-header">
+                        <div class="prescription-date">March 15, 2025</div>
+                        <div class="prescription-doctor">Dr. Robert Miller</div>
+                    </div>
+                    <div class="prescription-details">
+                        <p><strong>Medication:</strong> Lisinopril 10mg</p>
+                        <p><strong>Dosage:</strong> 1 tablet daily</p>
+                        <p><strong>Duration:</strong> 60 days</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js"></script>
     <script>
         // Navigate to different pages
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function() {
-                // Remove active class from all items
                 document.querySelectorAll('.menu-item').forEach(i => {
                     i.classList.remove('active');
                 });
-                
-                // Add active class to clicked item
                 this.classList.add('active');
-                
-                // In a real application, you would navigate to different pages here
                 console.log('Navigate to:', this.querySelector('span').textContent);
             });
         });
@@ -646,22 +1118,9 @@
         document.querySelectorAll('.action-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const action = this.querySelector('.action-label').textContent;
-                
-                // In a real application, you would navigate to different pages here
                 console.log('Quick action:', action);
-                
-                if (action === 'Enter Health Data') {
-                    window.location.href = 'health-data-entry.html';
-                } else if (action === 'Book Doctor') {
-                    window.location.href = 'channeling.html';
-                } else if (action === 'View Predictions') {
-                    window.location.href = 'predictions.html';
-                }
             });
         });
-        
-        // In a real application, you would fetch and render data here
-        // For example, charts would be rendered using a library like Chart.js
     </script>
 </body>
 </html>
