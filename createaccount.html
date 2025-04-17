@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthPredict - Create Account</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow: auto;
+        }
+        
+        body {
+            background-color: #f5f8fa;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .left-panel {
+            background: linear-gradient(135deg, #1e90ff, #0066cc);
+            color: white;
+            width: 40%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+        }
+        
+        .left-panel-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .right-panel {
+            width: 60%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color: white;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 12px;
+            font-size: 1.8rem;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .features {
+            margin-top: 1.5rem;
+        }
+        
+        .feature-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        
+        .feature-text {
+            font-size: 1rem;
+        }
+        
+        form {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+            width: 100%;
+        }
+        
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #e1e5e8;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background-color: #f9fafc;
+        }
+        
+        select {
+            appearance: none;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #1e90ff;
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
+            background-color: #fff;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: block;
+        }
+        
+        button {
+            background: linear-gradient(to right, #1e90ff, #4aa6ff);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 0.8rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(30, 144, 255, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(30, 144, 255, 0.3);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.2rem 0;
+            color: #aaa;
+        }
+        
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #eee;
+        }
+        
+        .divider span {
+            padding: 0 10px;
+            font-size: 0.85rem;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1.2rem;
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: #f5f8fa;
+            border: 1px solid #e1e5e8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #555;
+        }
+        
+        .social-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .social-button.google:hover { color: #DB4437; }
+        .social-button.facebook:hover { color: #4267B2; }
+        .social-button.linkedin:hover { color: #0077B5; }
+        
+        .social-button i {
+            font-size: 1.1rem;
+        }
+        
+        .alt-action {
+            text-align: center;
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .alt-action a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+        
+        .alt-action a:hover {
+            text-decoration: underline;
+        }
+        
+        .health-illustration {
+            position: absolute;
+            bottom: -120px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .form-hint {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 4px;
+        }
+        
+        .input-container {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 14px;
+            top: 12px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .password-strength {
+            height: 4px;
+            background-color: #eee;
+            border-radius: 2px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+        
+        .password-strength div {
+            height: 100%;
+            width: 60%;
+            background: linear-gradient(to right, #ff4757, #ffa502, #2ed573);
+        }
+        
+        .privacy-note {
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+            margin-top: 1.2rem;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-height: 800px) {
+            .left-panel, .right-panel {
+                padding: 1.5rem;
+            }
+            
+            .feature-item {
+                margin-bottom: 0.8rem;
+            }
+            
+            .form-group {
+                margin-bottom: 1rem;
+            }
+            
+            h2 {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .features {
+                margin-top: 1rem;
+            }
+            
+            .feature-item {
+                margin-bottom: 0.6rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="left-panel">
+        <div class="left-panel-content">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                HealthPredict
+            </div>
+            <p class="tagline">Your personal health prediction system for better healthcare management and timely medical assistance.</p>
+            
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="feature-text">Personalized health monitoring</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="feature-text">AI-powered health predictions</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-comment-medical"></i>
+                    </div>
+                    <div class="feature-text">Direct doctor consultations</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-text">Secure medical records</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="feature-text">Smart appointment scheduling</div>
+                </div>
+            </div>
+        </div>
+        
+        <svg class="health-illustration" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#FFFFFF" d="M44.7,-76.4C58.9,-69.8,71.8,-59.4,79.6,-45.8C87.3,-32.2,89.9,-16.1,88.1,-1.1C86.2,14,79.9,28,71.5,40.8C63,53.7,52.4,65.3,39.4,74.3C26.4,83.2,11,89.5,-3.2,89.1C-17.5,88.6,-30.9,81.5,-43.5,72.9C-56.1,64.3,-67.9,54.3,-76.1,41.3C-84.4,28.3,-89.1,12.2,-89.7,-4.4C-90.3,-20.9,-86.7,-37.3,-77.6,-49.9C-68.4,-62.4,-53.7,-71,-39.2,-77.5C-24.7,-84,-12.4,-88.4,1.2,-90.5C14.8,-92.5,30.5,-82.9,44.7,-76.4Z" transform="translate(100 100)" />
+        </svg>
+    </div>
+    
+    <div class="right-panel">
+        <form>
+            <h2>Create Your Account</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" placeholder="Enter first name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" placeholder="Enter last name" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-container">
+                    <input type="email" id="email" placeholder="name@example.com" required>
+                    <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                </div>
+                <span class="form-hint">We'll never share your email with anyone else</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Create Password</label>
+                <div class="input-container">
+                    <input type="password" id="password" placeholder="Choose a strong password" required>
+                    <span class="input-icon"><i class="fas fa-eye"></i></span>
+                </div>
+                <div class="password-strength">
+                    <div></div>
+                </div>
+                <span class="form-hint">At least 8 characters with numbers and symbols</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="input-container">
+                    <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
+                    <span class="input-icon"><i class="fas fa-lock"></i></span>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <div class="input-container">
+                        <input type="date" id="dateOfBirth" required>
+                        <span class="input-icon"><i class="fas fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <div class="input-container">
+                        <select id="gender">
+                            <option value="" disabled selected>Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                            <option value="prefer-not">Prefer not to say</option>
+                        </select>
+                        <span class="input-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="submit">Create Your Account <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></button>
+            
+            <div class="divider">
+                <span>Or sign up with</span>
+            </div>
+            
+            <div class="social-login">
+                <div class="social-button google">
+                    <i class="fab fa-google"></i>
+                </div>
+                <div class="social-button facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-button linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                </div>
+            </div>
+            
+            <div class="alt-action">
+                Already have an account?<a href="login.html">Sign in</a>
+            </div>
+            
+            <div class="privacy-note">
+                By signing up, you agree to our <a href="#" style="color: #1e90ff; text-decoration: none;">Terms</a> and <a href="#" style="color: #1e90ff; text-decoration: none;">Privacy Policy</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
